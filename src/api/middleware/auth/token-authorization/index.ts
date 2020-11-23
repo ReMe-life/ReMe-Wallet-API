@@ -1,16 +1,23 @@
 import { Request, Response, NextFunction } from 'express'
+import { token } from 'morgan'
 
 import { getLoggerFor } from '../../../services/logger'
 
-export class TokenAuthorization {
+class TokenAuth {
 
+    static instance: TokenAuth
     private logger = getLoggerFor(this.constructor.name)
 
     public constructor () {
-        this.authorize = this.authorize.bind(this)
+        if (!TokenAuth.instance) {
+            this.auth = this.auth.bind(this)
+            TokenAuth.instance = this
+        }
+
+        return TokenAuth.instance
     }
 
-    public async authorize (req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async auth (req: Request, res: Response, next: NextFunction): Promise<void> {
         const authHeader = req.get('Authorization')
         const token = authHeader ? authHeader.substring(7) : null
 
@@ -26,8 +33,10 @@ export class TokenAuthorization {
         }
     }
 
-    protected async getAuthorizer (token: string): Promise<any> {
+    private async getAuthorizer (token: string): Promise<any> {
 
     }
 
 }
+
+export default new TokenAuth()

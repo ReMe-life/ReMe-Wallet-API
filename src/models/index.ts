@@ -1,7 +1,7 @@
-import * as InputParser from './parser'
+import { Input } from './parser'
 import * as Templates from './templates'
 
 export {
-    InputParser,
+    Input,
     Templates
 }

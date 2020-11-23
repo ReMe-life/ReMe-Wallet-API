@@ -1,7 +1,5 @@
 import { FirebaseDatabase } from '../db-connectors/firebaseDatabase'
 
-import DB_CONFIG from '../../config/db-config.json'
-
 class BaseRepository {
 
     protected db: any;
@@ -11,7 +9,7 @@ class BaseRepository {
     public constructor (collection: string) {
         this.collection = collection
 
-        this.db = new FirebaseDatabase(DB_CONFIG, collection);
+        this.db = new FirebaseDatabase(JSON.parse(process.env.DB_CONNECTION), collection);
         this.isReady = this.db.initialize()
     }
 
