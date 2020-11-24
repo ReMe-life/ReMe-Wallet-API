@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
-import { token } from 'morgan'
 
 import { getLoggerFor } from '../../../services/logger'
+import { ReMeAPI } from '../../../../external-apis'
 
 class TokenAuth {
 
@@ -22,9 +22,8 @@ class TokenAuth {
         const token = authHeader ? authHeader.substring(7) : null
 
         try {
-            const authorizer = await this.getAuthorizer(token)
-            req.headers.authorization = token
-            res.locals.client = authorizer
+            await this.getAuthorizer(token)
+            res.locals.authorization = token
 
             return next()
         } catch (error) {
@@ -34,7 +33,7 @@ class TokenAuth {
     }
 
     private async getAuthorizer (token: string): Promise<any> {
-
+        return ReMeAPI.verifyToken(token)
     }
 
 }

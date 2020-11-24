@@ -31,10 +31,14 @@ export class FirebaseDatabase implements BaseDatabase {
         return this.db.doc().set(document);
     }
 
+    async update (document: any) {
+        return this.db.doc(document.id).set(document, { merge: true });
+    }
+
     async getById (id: any) {
         const result = await this.db.doc(id).get();
         if (result.empty) {
-            return {}
+            return undefined
         }
 
         return result.data();

@@ -1,23 +1,22 @@
 import { Request, Response } from 'express'
 
 import { Input, Templates } from '../../models'
-import { UserGameRewards } from '../../database/repositories'
+import { GameRewardsService } from '../../services'
 
 class GameRewardsController {
 
     public upload = async (req: Request, res: Response): Promise<void> => {
         const reward = Input.parseRequire(req.body, Templates.Rewards.Upload)
-        // Todo: Add reward as a new entity in the rewards array
-        reward.lockDuration = Date.now() + process.env.lockPeriod
-        await UserGameRewards.upsert(reward)
+        // reward.lockDuration = Date.now() + process.env.lockPeriod
+
+        await GameRewardsService.addUserReward(reward)
 
         res.status(200)
     }
 
     public getByUser = async (req: Request, res: Response): Promise<void> => {
-        // Todo: Calculate the total amount of rewards
-        const userReward = await UserGameRewards.getByEmail(req.query.email,)
-        res.send(userReward)
+        const userTotalRewards = await GameRewardsService.getByUser(req.params.email)
+        res.send(userTotalRewards)
     }
 }
 
