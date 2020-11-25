@@ -1,7 +1,5 @@
 import { FirebaseDatabase } from '../db-connectors/firebaseDatabase'
 
-import DB_CONFIG from '../../config/db-config.json'
-
 class BaseRepository {
 
     protected db: any;
@@ -11,7 +9,7 @@ class BaseRepository {
     public constructor (collection: string) {
         this.collection = collection
 
-        this.db = new FirebaseDatabase(DB_CONFIG, collection);
+        this.db = new FirebaseDatabase(collection)
         this.isReady = this.db.initialize()
     }
 
@@ -19,10 +17,10 @@ class BaseRepository {
         await this.isReady
 
         try {
-            const data = await this.db.create(document);
-            return data;
+            const data = await this.db.create(document)
+            return data
         } catch (error) {
-            throw new Error(`Error when creating document for ${this.collection}: ${error.message}`);
+            throw new Error(`Error when creating document for ${this.collection}: ${error.message}`)
         }
     }
 
@@ -30,10 +28,10 @@ class BaseRepository {
         await this.isReady
 
         try {
-            const data = await this.db.getById(id);
+            const data = await this.db.getById(id)
             return data
         } catch (error) {
-            throw new Error(`Error when getting document for ${this.collection}: ${error.message}`);
+            throw new Error(`Error when getting document for ${this.collection}: ${error.message}`)
         }
     }
 

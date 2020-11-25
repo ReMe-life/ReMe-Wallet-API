@@ -1,5 +1,5 @@
-import * as RRP from './rrp'
+import * as User from './user'
 
 export {
-    RRP
+    User
 }

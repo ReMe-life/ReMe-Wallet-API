@@ -3,7 +3,7 @@ import { InternalError } from '../../exception'
 
 export class RRPApi {
 
-    static async createUser (token: string, user: any): Promise<any> {
+    public static async createUser (token: string, user: any): Promise<any> {
         try {
             const result = await HTTPRequester.post(
                 `${process.env.RRP_ENDPOINT}/addWithReferral`,
@@ -19,7 +19,7 @@ export class RRPApi {
         }
     }
 
-    static async getReferralBalance (token: string, userAddress: string): Promise<any> {
+    public static async getReferralBalance (token: string, userAddress: string): Promise<any> {
         try {
             const result = await HTTPRequester.get(
                 `${process.env.RRP_ENDPOINT}/getMyBalance/${userAddress}`,
@@ -34,7 +34,7 @@ export class RRPApi {
         }
     }
 
-    static async getReferralLink (token: string, userAddress: string): Promise<any> {
+    public static async getReferralLink (token: string, userAddress: string): Promise<any> {
         try {
             const result = await HTTPRequester.get(
                 `${process.env.RRP_ENDPOINT}/getReferralCode/${userAddress}`,
