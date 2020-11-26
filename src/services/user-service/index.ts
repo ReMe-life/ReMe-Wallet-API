@@ -4,14 +4,17 @@ import { RRPApi } from '../../external-apis'
 export class UserService {
 
     public static async register (token: string, userDetails: any): Promise<void> {
+        await RRPApi.createUser(token, { address: userDetails.wallet.address, referredBy: userDetails.referredBy })
+        const referralLink = await RRPApi.getReferralLink(token, userDetails.wallet.address)
+
         await Users.create({
             email: userDetails.email,
             ethAddress: userDetails.wallet.address,
             wallet: userDetails.wallet.json,
-            tokens: process.env.SIGN_UP_REWARD
+            signupTokens: process.env.SIGN_UP_REWARD,
+            referralLink
         })
 
-        await RRPApi.createUser(token, { address: userDetails.wallet.address, referredBy: userDetails.referredBy })
     }
 
     public static async doesExist (email: string): Promise<boolean> {

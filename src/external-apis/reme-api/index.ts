@@ -13,7 +13,7 @@ export class ReMeApi {
             }
         )
 
-        return result.token
+        return result.jwt
     }
 
     public static async login (email: string, password: string): Promise<any> {
@@ -22,7 +22,15 @@ export class ReMeApi {
             { username: email, password }
         )
 
-        return result.token
+        return result.jwt
+    }
+
+    public static async getUser (userId: string): Promise<any> {
+        const result = await HTTPRequester.get(
+            `${process.env.REME_CORE_ENDPOINT}/users/${userId}`
+        )
+
+        return result
     }
 
     public static async validateToken (token: string): Promise<boolean> {

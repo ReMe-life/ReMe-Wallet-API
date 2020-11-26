@@ -24,7 +24,9 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "dependencies": {
+    "@types/atob": "^2.1.2",
     "async": "^3.0.1",
+    "atob": "^2.1.2",
     "await-to-js": "^2.1.1",
     "axios": "^0.19.2",
     "bluebird": "^3.5.5",
@@ -39,6 +41,7 @@
     "express-session": "^1.16.2",
     "express-validator": "^6.0.1",
     "firebase": "^8.1.1",
+    "firebase-admin": "^9.4.1",
     "lodash": "^4.17.13",
     "lusca": "^1.6.1",
     "winston": "^3.3.3"

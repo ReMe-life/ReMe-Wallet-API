@@ -54,7 +54,7 @@ class AuthController {
 
             res.send({ token: undefined })
         } catch (error) {
-            this.logger.error(JSON.stringify(error))
+            this.logger.error(error)
             throw new InternalError('User does not have registration')
         }
     }
