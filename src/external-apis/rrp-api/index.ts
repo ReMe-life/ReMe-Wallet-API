@@ -26,7 +26,7 @@ export class RRPApi {
                 { Authorization: `Bearer ${token}` }
             )
 
-            return result
+            return result.data.balance
         } catch (error) {
             throw new InternalError(
                 `Retrieving of referral amount for user[${userAddress}] has failed: ${JSON.stringify(error)}`
@@ -41,7 +41,7 @@ export class RRPApi {
                 { Authorization: `Bearer ${token}` }
             )
 
-            return result
+            return result.data.referral_code
         } catch (error) {
             throw new InternalError(
                 `Retrieving of referral link for user[${userAddress}] has failed: ${JSON.stringify(error)}`

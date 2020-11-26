@@ -5,7 +5,7 @@ export const ByReferral = {
         'email',
         'password',
         'referredBy',
-        'wallet',
+        'wallet'
     ],
     subTemplates: {
         wallet: {

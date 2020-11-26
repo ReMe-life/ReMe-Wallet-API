@@ -3,17 +3,18 @@ import { HTTPRequester } from '../http-requester'
 export class ReMeApi {
 
     public static async register (user: any): Promise<any> {
-        const result = await HTTPRequester.post(
+        await HTTPRequester.post(
             `${process.env.REME_CORE_ENDPOINT}/auth/register`,
             {
-                firstName: user.firstName,
-                lastName: user.lastName,
+                firstname: user.firstName,
+                lastname: user.lastName,
                 password: user.password,
                 username: user.email
             }
         )
 
-        return result.jwt
+        const token = await ReMeApi.login(user.email, user.password)
+        return token
     }
 
     public static async login (email: string, password: string): Promise<any> {
@@ -25,9 +26,10 @@ export class ReMeApi {
         return result.jwt
     }
 
-    public static async getUser (userId: string): Promise<any> {
+    public static async getUser (token: string, userId: string): Promise<any> {
         const result = await HTTPRequester.get(
-            `${process.env.REME_CORE_ENDPOINT}/users/${userId}`
+            `${process.env.REME_CORE_ENDPOINT}/users/${userId}`,
+            { Authorization: `Bearer ${token}` }
         )
 
         return result

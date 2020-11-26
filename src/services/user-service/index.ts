@@ -14,10 +14,10 @@ export class UserService {
             signupTokens: process.env.SIGN_UP_REWARD,
             referralLink
         })
-
     }
 
     public static async doesExist (email: string): Promise<boolean> {
         return !!(await Users.getByEmail(email))
     }
+
 }
