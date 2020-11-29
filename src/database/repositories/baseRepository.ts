@@ -24,6 +24,28 @@ class BaseRepository {
         }
     }
 
+    public async update (document: any) {
+        await this.isReady
+
+        try {
+            const data = await this.db.update(document)
+            return data
+        } catch (error) {
+            throw new Error(`Error when updating document for ${this.collection}: ${error.message}`)
+        }
+    }
+
+    public async all (): Promise<any> {
+        await this.isReady
+
+        try {
+            const data = await this.db.all()
+            return data
+        } catch (error) {
+            throw new Error(`Error when getting all documents for ${this.collection}: ${error.message}`)
+        }
+    }
+
     public async getById (id: any): Promise<any> {
         await this.isReady
 
