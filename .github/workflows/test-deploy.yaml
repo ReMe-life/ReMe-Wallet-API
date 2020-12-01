@@ -55,4 +55,4 @@ jobs:
         PROJECT_ID:  reme-wallet-test
         APPLICATION_CREDENTIALS: ${{ secrets.GKE_TEST_KEY }}
       with:
-        args: gcloud app deploy ./app-test.yaml --image-url=${{ env.DOCKER_REGISTRY }}${{ env.DOCKER_NAME }}:latest
+        args: app deploy ./app-test.yaml --image-url=${{ env.DOCKER_REGISTRY }}${{ env.DOCKER_NAME }}:latest
