@@ -1,2 +1,2 @@
-service: wallet-api-test
+service: default
 runtime: nodejs10
