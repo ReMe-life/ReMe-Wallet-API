@@ -24,7 +24,6 @@ jobs:
         gcloud auth configure-docker
 
     - name: build docker image
-      working-directory: ./api-build
       run: |
         docker build \
         --build-arg PORT=80 \
@@ -38,13 +37,11 @@ jobs:
         -t reme-wallet-api .
 
     - name: set tags to docker images
-      working-directory: ./api-build
       run: |
         docker tag reme-wallet-api ${{ env.DOCKER_REGISTRY }}${{ env.DOCKER_NAME }}:latest
         docker tag reme-wallet-api ${{ env.DOCKER_REGISTRY }}${{ env.DOCKER_NAME }}:${{ env.DOCKER_VERSION }}
     
     - name: push docker images
-      working-directory: ./api-build
       run: |
         docker push ${{ env.DOCKER_REGISTRY }}${{ env.DOCKER_NAME }}:latest
         docker push ${{ env.DOCKER_REGISTRY }}${{ env.DOCKER_NAME }}:${{ env.DOCKER_VERSION }}
