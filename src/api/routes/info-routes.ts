@@ -1,4 +1,4 @@
-import InfoController from '../controllers/info-controller'
+import { InfoController } from '../controllers'
 
 export const infoRoutes = (expressApp: any) => {
     const router = expressApp.Router()
