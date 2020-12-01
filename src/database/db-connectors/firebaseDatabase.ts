@@ -1,3 +1,4 @@
+import atob from 'atob'
 import admin from 'firebase-admin'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -15,7 +16,7 @@ export class FirebaseDatabase implements BaseDatabase {
 
     public async initialize () {
         if (firebase.apps.length === 0) {
-            const dbConnection = JSON.parse(process.env.DB_CONNECTION)
+            const dbConnection = JSON.parse(atob(process.env.DB_CONNECTION))
             firebase.initializeApp({
                 projectId: dbConnection.serviceAccount.projectId,
                 credential: admin.credential.cert(dbConnection.serviceAccount),

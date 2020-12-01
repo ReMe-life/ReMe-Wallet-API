@@ -27,6 +27,7 @@
     "@types/atob": "^2.1.2",
     "@types/jsonwebtoken": "^8.5.0",
     "async": "^3.0.1",
+    "atob": "^2.1.2",
     "await-to-js": "^2.1.1",
     "axios": "^0.19.2",
     "bluebird": "^3.5.5",
