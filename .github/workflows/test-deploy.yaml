@@ -52,7 +52,7 @@ jobs:
     - uses: actions-hub/gcloud@master
       name: deploy service
       env:
-        PROJECT_ID:  ${{ matrix.project_id }}
-        APPLICATION_CREDENTIALS: ${{matrix.service_account_key}}
+        PROJECT_ID:  reme-wallet-test
+        APPLICATION_CREDENTIALS: ${{ secrets.GKE_TEST_KEY }}
       with:
         args: app deploy ./app-test.yaml --image-url=${{ env.DOCKER_REGISTRY }}${{ env.DOCKER_NAME }}:latest
