@@ -9,9 +9,9 @@
   "author": "LimeChain",
   "license": "MIT",
   "scripts": {
-    "start": "npm run build && npm run serve",
+    "start": "npm run serve",
     "build": "npm run build-ts && npm run lint",
-    "gcp-build": "tsc -p .",
+    "gcp-build": "tsc -p . && npm run lint",
     "serve": "node dist/server.js",
     "watch-node": "nodemon dist/server.js",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
