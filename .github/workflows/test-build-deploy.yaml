@@ -27,11 +27,7 @@ jobs:
           npm install
           npm run build
 
-      - uses: actions-hub/gcloud@master
         name: Upload environment variables
-        env:
-          PROJECT_ID: reme-wallet-test
-          APPLICATION_CREDENTIALS: ${{secrets.GKE_KEY}}
         run: |
           echo $SIGN_UP_REWARD >> .env
           echo $DB_CONNECTION >> .env
