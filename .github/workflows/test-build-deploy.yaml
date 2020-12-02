@@ -27,7 +27,7 @@ jobs:
           npm install
           npm run build
 
-        name: Upload environment variables
+      - name: Upload environment variables
         run: |
           echo $SIGN_UP_REWARD >> .env
           echo $DB_CONNECTION >> .env
