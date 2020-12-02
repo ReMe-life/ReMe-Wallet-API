@@ -25,6 +25,7 @@ jobs:
       - name: Build API
         run: |
           npm install
+          npm install typescript -g
           npm run build
 
       - name: Upload environment variables
