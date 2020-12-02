@@ -46,7 +46,7 @@ jobs:
           DISTRIBUTION_CONTRACT: ${{ secrets.DISTRIBUTION_CONTRACT }}
      
       - run: |
-          gcloud auth login
+          gcloud auth activate-service-account
 
       - uses: actions-hub/gcloud@master
         name: Deploy service
