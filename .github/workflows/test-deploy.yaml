@@ -2,7 +2,7 @@ name: Build & Deploy Test ReMe Wallet API
 on:
   push:
     branches:
-    - staging
+    - abv
 env:
   DOCKER_REGISTRY: "eu.gcr.io/reme-wallet-test/"
   DOCKER_VERSION: 0.0.${GITHUB_RUN_NUMBER}

@@ -1,0 +1,58 @@
+name: Test Build and Deploy to GCE
+
+on:
+  push:
+    branches:
+    - staging
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build API
+        run: |
+          npm install
+          npm run build
+
+      - uses: actions-hub/gcloud@master
+        name: Upload environment variables
+        env:
+          PROJECT_ID: reme-wallet-test
+          APPLICATION_CREDENTIALS: ${{secrets.GKE_KEY}}
+        run: |
+          echo $SIGN_UP_REWARD >> .env
+          echo $DB_CONNECTION >> .env
+          echo $ADMIN_EMAIL >> .env
+          echo $ADMIN_PASSWORD >> .env
+          echo $ADMIN_PRIVATE_KEY >> .env
+          echo $BLOCKCHAIN_NETWORK >> .env
+          echo $DISTRIBUTION_CONTRACT >> .env
+        env: 
+          SIGN_UP_REWARD: ${{ secrets.SIGN_UP_REWARD }}
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          ADMIN_PRIVATE_KEY: ${{ secrets.ADMIN_PRIVATE_KEY }}
+          BLOCKCHAIN_NETWORK: ${{ secrets.BLOCKCHAIN_NETWORK }}
+          DISTRIBUTION_CONTRACT: ${{ secrets.DISTRIBUTION_CONTRACT }}
+
+      - uses: actions-hub/gcloud@master
+        name: Deploy service
+        env:
+          PROJECT_ID: reme-wallet-test
+          APPLICATION_CREDENTIALS: ${{secrets.GKE_KEY}}
+        with:
+          args: app deploy ./app-test.yaml

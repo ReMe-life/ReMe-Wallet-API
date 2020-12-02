@@ -1,3 +1,2 @@
 service: default
 runtime: nodejs10
-env: flex
