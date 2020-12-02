@@ -44,12 +44,7 @@ jobs:
           ADMIN_PRIVATE_KEY: ${{ secrets.ADMIN_PRIVATE_KEY }}
           BLOCKCHAIN_NETWORK: ${{ secrets.BLOCKCHAIN_NETWORK }}
           DISTRIBUTION_CONTRACT: ${{ secrets.DISTRIBUTION_CONTRACT }}
-        
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-          version: '281.0.0'
-          project_id: reme-wallet-test
-          service_account_key: ${{ secrets.GKE_TEST_KEY }}
+     
       - run: |
           gcloud auth login
 
