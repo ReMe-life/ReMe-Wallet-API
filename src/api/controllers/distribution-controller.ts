@@ -1,27 +1,36 @@
+import { BigNumber } from 'ethers'
 import { Request, Response } from 'express'
 
-import { Users } from '../../database/repositories'
+import { Users, Distributions } from '../../database/repositories'
 import { DistributionService } from '../../services'
 import { RRPApi, ReMeApi, DistributionApi } from '../../external-apis'
-
 
 class DistributionController {
 
     public distribute = async (req: Request, res: Response): Promise<void> => {
+        // @ts-ignore
+        const distribution = { users: [] }
         const allUsers = await Users.all()
 
         for (let i = 0; i < allUsers.length; i++) {
             const user = allUsers[i]
-            const rrpBalance = await RRPApi.getReferralBalance('token', user.ethAddress)
-            const tokensForClaiming = (rrpBalance + user.signupTokens) - user.loadedTokens
 
-            user.distributionIndex = await DistributionApi.addMoreTokens(user.ethAddress, tokensForClaiming)
-            user.loadedTokens += tokensForClaiming
-            await Users.update(user)
+            const loadedTokens = BigNumber.from(user.loadedTokens)
+            const rrpBalance = BigNumber.from(await RRPApi.getReferralBalance('token', user.ethAddress))
+            const tokensForClaiming = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
+
+            if (!tokensForClaiming.eq('0')) {
+                user.distributionIndex = await DistributionApi.addMoreTokens(user.ethAddress, tokensForClaiming.toString())
+                user.loadedTokens = loadedTokens.add(tokensForClaiming).toString()
+                await Users.update(user)
+
+                distribution.users.push({ email: user.email, claimAmount: tokensForClaiming.toString() })
+            }
         }
 
         const distributionHash = await DistributionApi.getRootHash()
         await DistributionService.updateRootHash(distributionHash)
+        await Distributions.create(distribution)
 
         res.status(200)
     }
@@ -36,6 +45,7 @@ class DistributionController {
             distributionIndex: user.distributionIndex
         })
     }
+
 }
 
 export default new DistributionController()
