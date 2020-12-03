@@ -1,0 +1,57 @@
+name: Test Build and Deploy to GCE
+
+on:
+  push:
+    branches:
+    - staging
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install -g typescript
+
+      - name: Upload environment variables
+        run: |
+          echo PORT=80 >> .env
+          echo RRP_ENDPOINT=https://ws-remelife.s6.staging-host.com >> .env
+          echo REME_CORE_ENDPOINT=https://reme.onlinedemo.space:8492 >> .env
+          echo SIGN_UP_REWARD=$SIGN_UP_REWARD >> .env
+          echo DB_CONNECTION=$DB_CONNECTION >> .env
+          echo ADMIN_EMAIL=$ADMIN_EMAIL >> .env
+          echo ADMIN_PASSWORD=$ADMIN_PASSWORD >> .env
+          echo ADMIN_PRIVATE_KEY=$ADMIN_PRIVATE_KEY >> .env
+          echo BLOCKCHAIN_NETWORK=$BLOCKCHAIN_NETWORK >> .env
+          echo DISTRIBUTION_CONTRACT=$DISTRIBUTION_CONTRACT >> .env
+        env: 
+          SIGN_UP_REWARD: ${{ secrets.SIGN_UP_REWARD }}
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          ADMIN_PRIVATE_KEY: ${{ secrets.ADMIN_PRIVATE_KEY }}
+          BLOCKCHAIN_NETWORK: ${{ secrets.BLOCKCHAIN_NETWORK }}
+          DISTRIBUTION_CONTRACT: ${{ secrets.DISTRIBUTION_CONTRACT }}
+
+      - uses: actions-hub/gcloud@master
+        name: Deploy service
+        env:
+          PROJECT_ID: reme-wallet-test
+          APPLICATION_CREDENTIALS: ${{ secrets.GKE_TEST_KEY }}
+        with:
+          args: app deploy ./app-test.yaml

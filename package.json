@@ -9,8 +9,9 @@
   "author": "LimeChain",
   "license": "MIT",
   "scripts": {
-    "start": "npm run build && npm run serve",
+    "start": "npm run serve",
     "build": "npm run build-ts && npm run lint",
+    "gcp-build": "tsc -p . && npm run lint",
     "serve": "node dist/server.js",
     "watch-node": "nodemon dist/server.js",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
@@ -27,6 +28,7 @@
     "@types/atob": "^2.1.2",
     "@types/jsonwebtoken": "^8.5.0",
     "async": "^3.0.1",
+    "atob": "^2.1.2",
     "await-to-js": "^2.1.1",
     "axios": "^0.19.2",
     "bluebird": "^3.5.5",

@@ -4,7 +4,7 @@ import { Contract, providers, Wallet } from 'ethers'
 class DistributionService {
 
     private contract: any
-    static instance: DistributionService
+    public static instance: DistributionService
 
     public constructor () {
         if (!DistributionService.instance) {
@@ -18,8 +18,8 @@ class DistributionService {
         return DistributionService.instance
     }
 
-    public async getTotalClaimed (address: string): Promise<number> {
-        return this.contract.totalClaimed(address)
+    public async getTotalClaimed (address: string): Promise<any> {
+        return this.contract.claimedTokensPerUser(address)
     }
 
     public async updateRootHash (hash: string): Promise<void> {
