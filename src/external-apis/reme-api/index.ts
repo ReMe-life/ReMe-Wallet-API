@@ -1,3 +1,4 @@
+import { verify } from 'jsonwebtoken'
 import { HTTPRequester } from '../http-requester'
 
 export class ReMeApi {
@@ -26,6 +27,20 @@ export class ReMeApi {
         return result.jwt
     }
 
+    public static async validateToken (token: string): Promise<boolean> {
+        const result = await HTTPRequester.get(
+            `${process.env.REME_CORE_ENDPOINT}/auth/verification_key`
+        )
+
+        return new Promise((resolve, reject) => {
+            verify(token, result.public_key, (err: any, decoded: any) => {
+                if (err) return reject(err)
+
+                resolve(decoded)
+            })
+        })
+    }
+
     public static async getUser (token: string, userId: string): Promise<any> {
         const result = await HTTPRequester.get(
             `${process.env.REME_CORE_ENDPOINT}/users/${userId}`,
@@ -34,9 +49,4 @@ export class ReMeApi {
 
         return result
     }
-
-    public static async validateToken (token: string): Promise<boolean> {
-        return true
-    }
-
 }

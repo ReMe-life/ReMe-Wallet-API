@@ -1,4 +1,3 @@
-import atob from 'atob'
 import { Request, Response, NextFunction } from 'express'
 
 import { ReMeApi } from '../../../../external-apis'
@@ -12,10 +11,10 @@ export class TokenAuth {
         const token = authHeader ? authHeader.substring(7) : null
 
         try {
-            const validToken = await ReMeApi.validateToken(token)
-            if (validToken) {
+            const tokenData = await ReMeApi.validateToken(token)
+            if (tokenData) {
                 res.locals.token = token
-                res.locals.tokenInfo = JSON.parse(atob(token.split('.')[1]))
+                res.locals.tokenInfo = tokenData
 
                 return next()
             }

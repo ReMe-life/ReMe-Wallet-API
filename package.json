@@ -25,8 +25,8 @@
   },
   "dependencies": {
     "@types/atob": "^2.1.2",
+    "@types/jsonwebtoken": "^8.5.0",
     "async": "^3.0.1",
-    "atob": "^2.1.2",
     "await-to-js": "^2.1.1",
     "axios": "^0.19.2",
     "bluebird": "^3.5.5",
@@ -37,11 +37,13 @@
     "cross-fetch": "3.0.4",
     "dotenv": "^8.0.0",
     "errorhandler": "^1.5.1",
+    "ethers": "^5.0.23",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "express-validator": "^6.0.1",
     "firebase": "^8.1.1",
     "firebase-admin": "^9.4.1",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.13",
     "lusca": "^1.6.1",
     "winston": "^3.3.3"

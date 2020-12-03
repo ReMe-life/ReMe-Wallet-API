@@ -12,7 +12,8 @@ export class UserService {
             ethAddress: userDetails.wallet.address,
             wallet: userDetails.wallet.json,
             signupTokens: process.env.SIGN_UP_REWARD,
-            referralLink
+            referralLink,
+            loadedTokens: 0
         })
     }
 
