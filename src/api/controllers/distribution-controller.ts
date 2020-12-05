@@ -32,7 +32,7 @@ class DistributionController {
         await DistributionService.updateRootHash(distributionHash)
         await Distributions.create(distribution)
 
-        res.status(200)
+        res.send()
     }
 
     public getClaimData = async (req: Request, res: Response): Promise<void> => {
@@ -42,6 +42,7 @@ class DistributionController {
         const proof = await DistributionApi.getProof(user.distributionIndex)
         res.send({
             proof,
+            distributedTokens: user.loadedTokens,
             distributionIndex: user.distributionIndex
         })
     }

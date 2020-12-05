@@ -16,7 +16,7 @@ export class DistributionApi {
             `${process.env.DISTRIBUTION_ENDPOINT}/merkletree`
         )
 
-        return result.tree.hash
+        return result.tree.root
     }
 
     public static async getProof (index: number): Promise<any[]> {
