@@ -32,6 +32,7 @@ jobs:
           echo PORT=80 >> .env
           echo RRP_ENDPOINT=https://ws-remelife.s6.staging-host.com >> .env
           echo REME_CORE_ENDPOINT=https://reme.onlinedemo.space:8492 >> .env
+          echo DISTRIBUTION_ENDPOINT=$DISTRIBUTION_ENDPOINT >> .env
           echo SIGN_UP_REWARD=$SIGN_UP_REWARD >> .env
           echo DB_CONNECTION=$DB_CONNECTION >> .env
           echo ADMIN_EMAIL=$ADMIN_EMAIL >> .env
@@ -47,6 +48,7 @@ jobs:
           ADMIN_PRIVATE_KEY: ${{ secrets.ADMIN_PRIVATE_KEY }}
           BLOCKCHAIN_NETWORK: ${{ secrets.BLOCKCHAIN_NETWORK }}
           DISTRIBUTION_CONTRACT: ${{ secrets.DISTRIBUTION_CONTRACT }}
+          DISTRIBUTION_ENDPOINT: ${{ secrets.DISTRIBUTION_ENDPOINT }}
 
       - uses: actions-hub/gcloud@master
         name: Deploy service
