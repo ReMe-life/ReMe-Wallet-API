@@ -26,8 +26,8 @@ class UsersController {
                 address: user.ethAddress
             },
             earnedTokens: {
-                signup: user.signupTokens,
-                referral: rrpBalance.toString()
+                signup: totalClaimed.sub(user.signupTokens).gt('0') ? user.signupTokens : '0',
+                referral: totalClaimed.sub(user.signupTokens).gt('0') ? totalClaimed.sub(user.signupTokens).toString() : '0'
             },
             incomingTokens: incomingTokens.toString(),
             tokensForClaiming: tokensForClaiming.toString()

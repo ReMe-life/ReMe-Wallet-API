@@ -25,7 +25,7 @@ const executeRequest = async function (type: string, url: string, data: any, hea
 export class HTTPRequester {
 
     public static async get (url: string, headers: any = {}) {
-        return executeRequest('GET', url, {}, headers)
+        return executeRequest('GET', url, undefined, headers)
     }
 
     public static async getStream (url: string): Promise<any> {

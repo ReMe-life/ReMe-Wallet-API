@@ -9,6 +9,9 @@ class AdminAuth {
 
     public constructor () {
         if (!AdminAuth.instance) {
+            this.auth = this.auth.bind(this)
+            this.parseBasicAuth = this.parseBasicAuth.bind(this)
+
             AdminAuth.instance = this
         }
 
@@ -37,7 +40,7 @@ class AdminAuth {
 
         const authData = auth.split(/\s/)[1]
         const authBuffer = Buffer.from(authData, 'base64').toString()
-        const credentials = authBuffer.split(':')[0]
+        const credentials = authBuffer.split(':')
 
         return {
             email: credentials[0],

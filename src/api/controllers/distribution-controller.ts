@@ -20,8 +20,9 @@ class DistributionController {
             const tokensForClaiming = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
 
             if (!tokensForClaiming.eq('0')) {
-                user.distributionIndex = await DistributionApi.addMoreTokens(user.ethAddress, tokensForClaiming.toString())
-                user.loadedTokens = loadedTokens.add(tokensForClaiming).toString()
+                const totalDistributedTokens = loadedTokens.add(tokensForClaiming).toString()
+                user.distributionIndex = await DistributionApi.addMoreTokens(user.ethAddress, totalDistributedTokens)
+                user.loadedTokens = totalDistributedTokens
                 await Users.update(user)
 
                 distribution.users.push({ email: user.email, claimAmount: tokensForClaiming.toString() })
@@ -32,7 +33,8 @@ class DistributionController {
         await DistributionService.updateRootHash(distributionHash)
         await Distributions.create(distribution)
 
-        res.status(200)
+
+        res.send()
     }
 
     public getClaimData = async (req: Request, res: Response): Promise<void> => {
@@ -42,6 +44,7 @@ class DistributionController {
         const proof = await DistributionApi.getProof(user.distributionIndex)
         res.send({
             proof,
+            distributedTokens: user.loadedTokens,
             distributionIndex: user.distributionIndex
         })
     }

@@ -1,5 +1,8 @@
+import { BigNumber } from 'ethers'
 import { HTTPRequester } from '../http-requester'
 import { InternalError } from '../../exception'
+
+const ONE_TOKEN = '1000000000000000000'
 
 export class RRPApi {
 
@@ -26,7 +29,7 @@ export class RRPApi {
                 { Authorization: `Bearer ${token}` }
             )
 
-            return result.data.balance
+            return BigNumber.from(result.data.balance).mul(ONE_TOKEN).toString()
         } catch (error) {
             throw new InternalError(
                 `Retrieving of referral amount for user[${userAddress}] has failed: ${JSON.stringify(error)}`
