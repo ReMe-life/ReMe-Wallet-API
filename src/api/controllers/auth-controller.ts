@@ -36,6 +36,11 @@ class AuthController {
             res.send({ token })
         } catch (error) {
             this.logger.error(JSON.stringify(error))
+
+            if (error.message.code === 409) {
+                throw new ExpectableError('Existing account uses this email address. Please login or try a different email address.')
+            }
+
             throw new ExpectableError('Referral registration failed')
         }
     }
