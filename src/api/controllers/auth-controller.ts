@@ -56,12 +56,12 @@ class AuthController {
             const userExists = await UserService.doesExist(email)
 
             if (userExists) {
-                // @ts-ignore
                 const encToken = CryptoService.encrypt(token)
+                // @ts-ignore
                 return res.send({ token, encToken })
             }
 
-            res.send({ token: undefined })
+            res.send({ token: undefined, encToken: undefined })
         } catch (error) {
             this.logger.error(error)
             throw new InternalError('User does not have registration')
