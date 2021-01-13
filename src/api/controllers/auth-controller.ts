@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 import { Input, Templates } from '../../models'
 
 import { ReMeApi } from '../../external-apis'
-import { UserService } from '../../services'
+import { UserService, CryptoService } from '../../services'
 import { ExpectableError, InternalError } from '../../exception'
 
 import { getLoggerFor } from '../../services/logger'
@@ -17,9 +17,10 @@ class AuthController {
 
         try {
             const token = await ReMeApi.login(regData.email, regData.password)
+            const encToken = CryptoService.encrypt(token)
             await UserService.register(token, regData)
 
-            res.send({ token })
+            res.send({ token, encToken })
         } catch (error) {
             this.logger.error(JSON.stringify(error))
             throw new ExpectableError('Registered failed')
@@ -31,9 +32,11 @@ class AuthController {
 
         try {
             const token = await ReMeApi.register(regData)
+            const encToken = CryptoService.encrypt(token)
             await UserService.register(token, regData)
 
-            res.send({ token })
+
+            res.send({ token, encToken })
         } catch (error) {
             this.logger.error(JSON.stringify(error))
 
@@ -54,7 +57,8 @@ class AuthController {
 
             if (userExists) {
                 // @ts-ignore
-                return res.send({ token })
+                const encToken = CryptoService.encrypt(token)
+                return res.send({ token, encToken })
             }
 
             res.send({ token: undefined })

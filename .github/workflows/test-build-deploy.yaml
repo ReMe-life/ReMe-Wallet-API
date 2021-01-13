@@ -33,6 +33,7 @@ jobs:
           echo RRP_ENDPOINT=https://ws-remelife.s6.staging-host.com >> .env
           echo REME_CORE_ENDPOINT=https://reme.onlinedemo.space:8492 >> .env
           echo DISTRIBUTION_ENDPOINT=$DISTRIBUTION_ENDPOINT >> .env
+          echo TOKEN_ENC_SECRET=$TOKEN_ENC_SECRET >> .env
           echo SIGN_UP_REWARD=$SIGN_UP_REWARD >> .env
           echo DB_CONNECTION=$DB_CONNECTION >> .env
           echo ADMIN_EMAIL=$ADMIN_EMAIL >> .env
@@ -42,6 +43,7 @@ jobs:
           echo DISTRIBUTION_CONTRACT=$DISTRIBUTION_CONTRACT >> .env
         env: 
           SIGN_UP_REWARD: ${{ secrets.SIGN_UP_REWARD }}
+          TOKEN_ENC_SECRET: ${{ secrets.TOKEN_ENC_SECRET }}
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
