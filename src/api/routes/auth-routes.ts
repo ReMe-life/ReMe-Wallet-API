@@ -8,5 +8,8 @@ export const authRoutes = (expressApp: any) => {
 
     router.post('/login', AuthController.login)
 
+    router.post('/reset', AuthController.reset)
+    router.post('/reset/confirm', AuthController.confirmReset)
+
     return router
 }

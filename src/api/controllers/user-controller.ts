@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import { BigNumber } from 'ethers'
 
+import { Input, Templates } from '../../models'
+
 import { ReMeApi, RRPApi } from '../../external-apis'
 import { DistributionService } from '../../services'
 import { Users } from '../../database/repositories'
@@ -33,6 +35,17 @@ class UsersController {
             incomingTokens: incomingTokens.toString(),
             tokensForClaiming: tokensForClaiming.toString()
         })
+    }
+
+    public saveRecoveredWallet = async (req: Request, res: Response): Promise<void> => {
+        const newWallet = Input.parseRequire(req.body, Templates.User.Wallet.NewEncrypted)
+
+        const remeUser = await ReMeApi.getUser(res.locals.token, res.locals.tokenInfo.id)
+        const user = await Users.getByEmail(remeUser.username)
+        user.wallet = newWallet
+
+        await Users.update(user)
+        res.send()
     }
 
 }
