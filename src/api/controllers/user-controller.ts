@@ -17,8 +17,9 @@ class UsersController {
         const totalClaimed = await DistributionService.getTotalClaimed(user.ethAddress)
         const tokensForClaiming = loadedTokens.sub(totalClaimed)
 
-        const rrpBalance = BigNumber.from(await RRPApi.getReferralBalance(res.locals.token, user.ethAddress))
-        const incomingTokens = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
+        // Todo: Uncomment it once having the RRP API token integration
+        // const rrpBalance = BigNumber.from(await RRPApi.getReferralBalance(res.locals.token, user.ethAddress))
+        // const incomingTokens = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
 
         res.send({
             email: user.email,
@@ -32,7 +33,8 @@ class UsersController {
                 referral: totalClaimed.sub(user.signupTokens).gt('0') ? totalClaimed.sub(user.signupTokens).toString() : '0'
             },
             signupTokens: user.signupTokens,
-            incomingTokens: incomingTokens.toString(),
+            // incomingTokens: incomingTokens.toString(),
+            incomingTokens: '1000000000000000000',
             tokensForClaiming: tokensForClaiming.toString()
         })
     }
@@ -42,7 +44,7 @@ class UsersController {
 
         const remeUser = await ReMeApi.getUser(res.locals.token, res.locals.tokenInfo.id)
         const user = await Users.getByEmail(remeUser.username)
-        user.wallet = newWallet
+        user.wallet = newWallet.wallet
 
         await Users.update(user)
         res.send()

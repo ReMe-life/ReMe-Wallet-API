@@ -59,7 +59,7 @@ export class ReMeApi {
 
     public static async confirmReset (resetData: any): Promise<void> {
         await HTTPRequester.post(
-            `${process.env.REME_CORE_ENDPOINT}/auth/forgot`,
+            `${process.env.REME_CORE_ENDPOINT}/auth/confirm`,
             { ...resetData }
         )
     }
