@@ -68,6 +68,30 @@ class AuthController {
         }
     }
 
+    public reset = async (req: Request, res: Response): Promise<void> => {
+        const { email } = Input.parseRequire(req.body, Templates.User.Password.Reset)
+
+        try {
+            await ReMeApi.resetPassword(email)
+            res.status(200).send()
+        } catch (error) {
+            this.logger.error(error)
+            throw new InternalError(error.message)
+        }
+    }
+
+    public confirmReset = async (req: Request, res: Response): Promise<void> => {
+        const resetData = Input.parseRequire(req.body, Templates.User.Password.ConfirmReset)
+
+        try {
+            await ReMeApi.confirmReset(resetData)
+            res.status(200).send()
+        } catch (error) {
+            this.logger.error(error)
+            throw new InternalError(error.message)
+        }
+    }
+
 }
 
 export default new AuthController()

@@ -49,4 +49,18 @@ export class ReMeApi {
 
         return result
     }
+
+    public static async resetPassword (email: string): Promise<void> {
+        await HTTPRequester.post(
+            `${process.env.REME_CORE_ENDPOINT}/auth/forgot`,
+            { username: email }
+        )
+    }
+
+    public static async confirmReset (resetData: any): Promise<void> {
+        await HTTPRequester.post(
+            `${process.env.REME_CORE_ENDPOINT}/auth/confirm`,
+            { ...resetData }
+        )
+    }
 }
