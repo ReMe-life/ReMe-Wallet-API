@@ -3,7 +3,8 @@ import { BigNumber } from 'ethers'
 
 import { Input, Templates } from '../../models'
 
-import { ReMeApi, RRPApi } from '../../external-apis'
+// RRPApis
+import { ReMeApi } from '../../external-apis'
 import { DistributionService } from '../../services'
 import { Users } from '../../database/repositories'
 
