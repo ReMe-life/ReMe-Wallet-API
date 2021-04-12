@@ -1,9 +1,11 @@
-import { BigNumber } from 'ethers'
+// import { BigNumber } from 'ethers'
 import { Request, Response } from 'express'
 
-import { Users, Distributions } from '../../database/repositories'
-import { DistributionService } from '../../services'
-import { RRPApi, ReMeApi, DistributionApi } from '../../external-apis'
+// import { Users, Distributions } from '../../database/repositories'
+import { Users } from '../../database/repositories'
+// import { DistributionService } from '../../services'
+// import { RRPApi, ReMeApi, DistributionApi } from '../../external-apis'
+import { ReMeApi, DistributionApi } from '../../external-apis'
 
 class DistributionController {
 
@@ -32,7 +34,6 @@ class DistributionController {
         // const distributionHash = await DistributionApi.getRootHash()
         // await DistributionService.updateRootHash(distributionHash)
         // await Distributions.create(distribution)
-
 
         // res.send()
     }

@@ -26,4 +26,5 @@ export class DistributionApi {
 
         return result.hashes
     }
+
 }

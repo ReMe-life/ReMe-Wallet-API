@@ -35,7 +35,6 @@ class AuthController {
             const encToken = CryptoService.encrypt(token)
             await UserService.register(regData)
 
-
             res.send({ token, encToken })
         } catch (error) {
             this.logger.error(JSON.stringify(error))

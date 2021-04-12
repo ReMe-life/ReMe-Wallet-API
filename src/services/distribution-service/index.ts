@@ -25,6 +25,7 @@ class DistributionService {
     public async updateRootHash (hash: string): Promise<void> {
         return this.contract.setRoot(hash)
     }
+
 }
 
 export default new DistributionService()

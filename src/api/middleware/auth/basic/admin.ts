@@ -47,6 +47,7 @@ class AdminAuth {
             password: credentials[1]
         }
     }
+
 }
 
 export default new AdminAuth()

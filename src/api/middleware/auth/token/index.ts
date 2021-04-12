@@ -6,7 +6,6 @@ import { CryptoService } from '../../../../services'
 import { getLoggerFor } from '../../../../services/logger'
 const logger = getLoggerFor('TokenAuth')
 
-
 export class TokenAuth {
 
     public static async auth (req: Request, res: Response, next: NextFunction): Promise<void> {
