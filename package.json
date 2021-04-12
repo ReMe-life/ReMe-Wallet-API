@@ -46,7 +46,7 @@
     "express-validator": "^6.0.1",
     "firebase": "^8.1.1",
     "firebase-admin": "^9.4.1",
-    "google-gax": "^2.11.2",
+    "google-gax": "^2.9.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.13",
     "lusca": "^1.6.1",
