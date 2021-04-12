@@ -52,8 +52,8 @@ jobs:
           DISTRIBUTION_CONTRACT: ${{ secrets.DISTRIBUTION_CONTRACT }}
           DISTRIBUTION_ENDPOINT: ${{ secrets.DISTRIBUTION_ENDPOINT }}
 
-      - uses: actions-hub/gcloud@319.0.0
-        name: Deploy service
+      - name: Deploy service
+        uses: actions-hub/gcloud@master
         env:
           PROJECT_ID: reme-wallet-test
           APPLICATION_CREDENTIALS: ${{ secrets.GKE_TEST_KEY }}
