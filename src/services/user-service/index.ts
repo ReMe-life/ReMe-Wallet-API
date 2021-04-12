@@ -3,9 +3,9 @@ import { RRPApi } from '../../external-apis'
 
 export class UserService {
 
-    public static async register (token: string, userDetails: any): Promise<void> {
-        await RRPApi.createUser(token, { address: userDetails.wallet.address, referredBy: userDetails.referredBy })
-        const referralLink = await RRPApi.getReferralLink(token, userDetails.wallet.address)
+    public static async register (userDetails: any): Promise<void> {
+        await RRPApi.createUser({ address: userDetails.wallet.address, referredBy: userDetails.referredBy })
+        const referralLink = await RRPApi.getReferralLink(userDetails.wallet.address)
 
         await Users.create({
             email: userDetails.email,

@@ -1,8 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
 
 import { ReMeApi } from '../../../../external-apis'
+import { CryptoService } from '../../../../services'
+
 import { getLoggerFor } from '../../../../services/logger'
 const logger = getLoggerFor('TokenAuth')
+
 
 export class TokenAuth {
 
@@ -15,6 +18,7 @@ export class TokenAuth {
             if (tokenData) {
                 res.locals.token = token
                 res.locals.tokenInfo = tokenData
+                res.locals.encToken = CryptoService.encrypt(token)
 
                 return next()
             }

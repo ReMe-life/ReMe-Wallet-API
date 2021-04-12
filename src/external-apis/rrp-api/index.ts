@@ -6,12 +6,11 @@ const ONE_TOKEN = '1000000000000000000'
 
 export class RRPApi {
 
-    public static async createUser (token: string, user: any): Promise<any> {
+    public static async createUser (user: any): Promise<any> {
         try {
             const result = await HTTPRequester.post(
                 `${process.env.RRP_ENDPOINT}/addWithReferral`,
-                { uid: user.address, referred_by: user.referredBy },
-                { Authorization: `Bearer ${token}` }
+                { uid: user.address, referred_by: user.referredBy }
             )
 
             return result
@@ -22,11 +21,11 @@ export class RRPApi {
         }
     }
 
-    public static async getReferralBalance (token: string, userAddress: string): Promise<any> {
+    public static async getReferralBalance (encToken: string, userAddress: string): Promise<any> {
         try {
             const result = await HTTPRequester.get(
                 `${process.env.RRP_ENDPOINT}/getMyBalance/${userAddress}`,
-                { Authorization: `Bearer ${token}` }
+                { Authorization: `${encToken}` }
             )
 
             return BigNumber.from(result.data.balance).mul(ONE_TOKEN).toString()
@@ -37,11 +36,10 @@ export class RRPApi {
         }
     }
 
-    public static async getReferralLink (token: string, userAddress: string): Promise<any> {
+    public static async getReferralLink (userAddress: string): Promise<any> {
         try {
             const result = await HTTPRequester.get(
-                `${process.env.RRP_ENDPOINT}/getReferralCode/${userAddress}`,
-                { Authorization: `Bearer ${token}` }
+                `${process.env.RRP_ENDPOINT}/getReferralCode/${userAddress}`
             )
 
             return result.data.referral_code

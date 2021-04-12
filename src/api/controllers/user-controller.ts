@@ -3,8 +3,7 @@ import { BigNumber } from 'ethers'
 
 import { Input, Templates } from '../../models'
 
-// RRPApis
-import { ReMeApi } from '../../external-apis'
+import { ReMeApi, RRPApi } from '../../external-apis'
 import { DistributionService } from '../../services'
 import { Users } from '../../database/repositories'
 
@@ -18,9 +17,8 @@ class UsersController {
         const totalClaimed = await DistributionService.getTotalClaimed(user.ethAddress)
         const tokensForClaiming = loadedTokens.sub(totalClaimed)
 
-        // Todo: Uncomment it once having the RRP API token integration
-        // const rrpBalance = BigNumber.from(await RRPApi.getReferralBalance(res.locals.token, user.ethAddress))
-        // const incomingTokens = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
+        const rrpBalance = BigNumber.from(await RRPApi.getReferralBalance(res.locals.encToken, user.ethAddress))
+        const incomingTokens = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
 
         res.send({
             email: user.email,
@@ -34,8 +32,7 @@ class UsersController {
                 referral: totalClaimed.sub(user.signupTokens).gt('0') ? totalClaimed.sub(user.signupTokens).toString() : '0'
             },
             signupTokens: user.signupTokens,
-            // incomingTokens: incomingTokens.toString(),
-            incomingTokens: '1000000000000000000',
+            incomingTokens: incomingTokens.toString(),
             tokensForClaiming: tokensForClaiming.toString()
         })
     }

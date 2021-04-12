@@ -18,7 +18,7 @@ class AuthController {
         try {
             const token = await ReMeApi.login(regData.email, regData.password)
             const encToken = CryptoService.encrypt(token)
-            await UserService.register(token, regData)
+            await UserService.register(regData)
 
             res.send({ token, encToken })
         } catch (error) {
@@ -33,7 +33,7 @@ class AuthController {
         try {
             const token = await ReMeApi.register(regData)
             const encToken = CryptoService.encrypt(token)
-            await UserService.register(token, regData)
+            await UserService.register(regData)
 
 
             res.send({ token, encToken })
