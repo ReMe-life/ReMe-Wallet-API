@@ -2,7 +2,8 @@ import { Request, Response } from 'express'
 
 import { Input, Templates } from '../../models'
 
-import { ReMeApi } from '../../external-apis'
+import { Users } from '../../database/repositories'
+import { ReMeApi, RRPApi } from '../../external-apis'
 import { UserService, CryptoService } from '../../services'
 import { ExpectableError, InternalError } from '../../exception'
 
@@ -52,10 +53,14 @@ class AuthController {
 
         try {
             const token = await ReMeApi.login(email, password)
-            const userExists = await UserService.doesExist(email)
+            const user = await Users.getByEmail(email)
 
-            if (userExists) {
+            if (user.email) {
                 const encToken = CryptoService.encrypt(token)
+
+                user.rrpBalance = await RRPApi.getReferralBalance(encToken, user.ethAddress)
+                await Users.update(user)
+
                 // @ts-ignore
                 return res.send({ token, encToken })
             }

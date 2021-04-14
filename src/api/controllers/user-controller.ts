@@ -17,7 +17,7 @@ class UsersController {
         const totalClaimed = await DistributionService.getTotalClaimed(user.ethAddress)
         const tokensForClaiming = loadedTokens.sub(totalClaimed)
 
-        const rrpBalance = BigNumber.from(await RRPApi.getReferralBalance(res.locals.encToken, user.ethAddress))
+        const rrpBalance = BigNumber.from(user.rrpBalance)
         const incomingTokens = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
 
         res.send({
