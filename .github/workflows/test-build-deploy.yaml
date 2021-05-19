@@ -30,7 +30,7 @@ jobs:
       - name: Upload environment variables
         run: |
           echo PORT=80 >> .env
-          echo RRP_ENDPOINT=http://ws-rrp.remelife.com >> .env
+          echo RRP_ENDPOINT=https://ws-remelife.s6.staging-host.com >> .env
           echo REME_CORE_ENDPOINT=https://reme.onlinedemo.space:8492 >> .env
           echo DISTRIBUTION_ENDPOINT=$DISTRIBUTION_ENDPOINT >> .env
           echo TOKEN_ENC_SECRET=$TOKEN_ENC_SECRET >> .env

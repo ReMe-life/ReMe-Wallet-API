@@ -18,8 +18,9 @@ class AuthController {
 
         try {
             const token = await ReMeApi.login(regData.email, regData.password)
-            const encToken = CryptoService.encrypt(token)
-            await UserService.register(regData)
+            const encToken = CryptoService.encryptData({ token, wallet: regData.wallet.address })
+
+            await UserService.register(encToken, regData)
 
             res.send({ token, encToken })
         } catch (error) {
@@ -33,8 +34,9 @@ class AuthController {
 
         try {
             const token = await ReMeApi.register(regData)
-            const encToken = CryptoService.encrypt(token)
-            await UserService.register(regData)
+            const encToken = CryptoService.encryptData({ token, wallet: regData.wallet.address })
+
+            await UserService.register(encToken, regData)
 
             res.send({ token, encToken })
         } catch (error) {
@@ -56,8 +58,8 @@ class AuthController {
             const user = await Users.getByEmail(email)
 
             if (user.email) {
-                const encToken = CryptoService.encrypt(token)
 
+                const encToken = CryptoService.encryptData({ wallet: user.ethAddress, token })
                 user.rrpBalance = await RRPApi.getReferralBalance(encToken, user.ethAddress)
                 await Users.update(user)
 

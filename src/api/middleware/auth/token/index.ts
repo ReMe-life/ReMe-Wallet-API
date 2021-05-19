@@ -17,7 +17,7 @@ export class TokenAuth {
             if (tokenData) {
                 res.locals.token = token
                 res.locals.tokenInfo = tokenData
-                res.locals.encToken = CryptoService.encrypt(token)
+                res.locals.encToken = CryptoService.encryptText(token)
 
                 return next()
             }
