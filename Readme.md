@@ -79,3 +79,6 @@ The distribution works as follow:
     * Calculate new balance to be added
     * Add the new balance to the distribution tree
 * Update the root distribution hash
+
+* Updated the .env
+  echo REME_CORE_ENDPOINT=https://reme.onlinedemo.space:8492 >> .env
