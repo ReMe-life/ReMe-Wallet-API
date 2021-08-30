@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { HTTPRequester } from '../http-requester'
 import { InternalError } from '../../exception'
-import * as https from "https";
+
 
 const ONE_TOKEN = '1000000000000000000'
 
