@@ -14,17 +14,17 @@ class DistributionController {
 
         for (let i = 0; i < allUsers.length; i++) {
             const user = allUsers[i]
-            if(user.rrpBalance) {
+            if (user.rrpBalance) {
                 const rrpBalance = BigNumber.from(user.rrpBalance)
                 const loadedTokens = BigNumber.from(user.loadedTokens)
                 const tokensForClaiming = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
-    
+
                 if (!tokensForClaiming.eq('0')) {
                     const totalDistributedTokens = loadedTokens.add(tokensForClaiming).toString()
                     user.distributionIndex = await DistributionApi.addMoreTokens(user.ethAddress, totalDistributedTokens)
                     user.loadedTokens = totalDistributedTokens
                     await Users.update(user)
-    
+
                     distribution.users.push({ email: user.email, claimAmount: tokensForClaiming.toString() })
                 }
             }

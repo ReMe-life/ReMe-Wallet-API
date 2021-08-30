@@ -1,6 +1,7 @@
 import { verify } from 'jsonwebtoken'
 import { HTTPRequester } from '../http-requester'
 
+
 export class ReMeApi {
 
     public static async register (user: any): Promise<any> {
@@ -13,8 +14,10 @@ export class ReMeApi {
                 username: user.email
             }
         )
+        console.log('In register for geeting token from login before.')
 
         const token = await ReMeApi.login(user.email, user.password)
+        console.log('After attempting token form login .. token here..', token)
         return token
     }
 
@@ -24,6 +27,7 @@ export class ReMeApi {
             { username: email, password }
         )
 
+        console.log("Login auth jwt ", result.jwt)
         return result.jwt
     }
 
