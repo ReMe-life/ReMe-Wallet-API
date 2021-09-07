@@ -38,10 +38,10 @@ export class RRPApi {
             console.log(encToken)
             console.log("uuid token line 39")
             console.log(`${process.env.RRP_ENDPOINT}`+'/getMyBalance/'+`${userAddress}`)
-            console.log({ Authorization: `Bearer ${encToken}` })
+            console.log("this is my token")
             const result = await HTTPRequester.get(
                 `${process.env.RRP_ENDPOINT}/getMyBalance/${userAddress}`,
-                { Authorization: `Bearer ${encToken}` }
+                { Authorization: `${encToken}` }
             )
 
             return BigNumber.from(result.data.balance).mul(ONE_TOKEN).toString()
