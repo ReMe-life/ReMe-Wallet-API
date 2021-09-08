@@ -34,18 +34,14 @@ export class RRPApi {
 
     public static async getReferralBalance (encToken: string, userAddress: string): Promise<any> {
         try {
-            console.log("Enc token line 37")
-            console.log(encToken)
-            console.log("uuid token line 39")
             console.log(`${process.env.RRP_ENDPOINT}`+'/getMyBalance/'+`${userAddress}`)
-            console.log("this is my token")
-            /*const result = await HTTPRequester.get(
+            const result = await HTTPRequester.get(
                 `${process.env.RRP_ENDPOINT}/getMyBalance/${userAddress}`,
                 { Authorization: `${encToken}` }
             )
 
-            return BigNumber.from(result.data.balance).mul(ONE_TOKEN).toString()*/
-            return BigNumber.from(1).mul(ONE_TOKEN).toString()
+            return BigNumber.from(result.data.balance).mul(ONE_TOKEN).toString()
+            //return BigNumber.from(1).mul(ONE_TOKEN).toString()
         } catch (error) {
             console.log("In rrp-api create user line 44", error)
             console.log("In rrp-api create user line 45", error.message)
