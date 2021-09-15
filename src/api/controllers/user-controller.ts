@@ -9,12 +9,9 @@ import { Users } from '../../database/repositories'
 
 class UsersController {
 
-
     public getDetails = async (req: Request, res: Response): Promise<void> => {
-        console.log("*************** Hello there i'm in fucntion ***************")
         const remeUser = await ReMeApi.getUser(res.locals.token, res.locals.tokenInfo.id)
         const user = await Users.getByEmail(remeUser.username)
-        console.log("user-controller line --~")
 
         const loadedTokens = BigNumber.from(user.loadedTokens)
         const totalClaimed = await DistributionService.getTotalClaimed(user.ethAddress)
@@ -31,12 +28,13 @@ class UsersController {
                 address: user.ethAddress
             },
             earnedTokens: {
-                signup: user.signupTokens,
-                referral: user.signupTokens,
+                signup: totalClaimed.sub(user.signupTokens).gt('0') ? user.signupTokens : '0',
+                referral: totalClaimed.sub(user.signupTokens).gt('0') ? totalClaimed.sub(user.signupTokens).toString() : '0'
             },
             signupTokens: user.signupTokens,
             incomingTokens: incomingTokens.toString(),
-            tokensForClaiming: tokensForClaiming.toString()
+            tokensForClaiming: tokensForClaiming.toString(),
+            rrpBalance: rrpBalance.toString()
         })
     }
 
