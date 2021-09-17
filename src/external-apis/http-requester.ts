@@ -1,15 +1,16 @@
 import axios, { Method } from 'axios'
-import * as https from "https";
+
+/*
 
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
 })
+*/
 
 const executeRequest = async function (type: string, url: string, data: any, headers: any = {}) {
     try {
-        axios.defaults.httpsAgent = httpsAgent
-        console.log("Header passed", headers)
-
+        /* axios.defaults.httpsAgent = httpsAgent
+        console.log("Header passed", headers) */
 
         const result = await axios({
             method: type as Method,
@@ -18,7 +19,7 @@ const executeRequest = async function (type: string, url: string, data: any, hea
             data
         })
 
-        console.log(process.env.NODE_ENV, `RejectUnauthorized is disabled.`)
+        /* console.log(process.env.NODE_ENV, `RejectUnauthorized is disabled.`) */
 
         return result.data
     } catch (error) {
@@ -39,12 +40,11 @@ export class HTTPRequester {
         return executeRequest('GET', url, undefined, headers)
     }
 
-
     public static async getStream (url: string): Promise<any> {
         const result = await axios({
             url,
             method: 'GET',
-            responseType: 'stream',
+            responseType: 'stream'
         })
 
         return result.data

@@ -50,6 +50,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.13",
     "lusca": "^1.6.1",
+    "run": "^1.4.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {

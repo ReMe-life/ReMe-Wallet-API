@@ -6,8 +6,11 @@ import { Users } from '../../database/repositories'
 import { ReMeApi, RRPApi } from '../../external-apis'
 import { UserService, CryptoService } from '../../services'
 import { ExpectableError, InternalError } from '../../exception'
+import { DistributionController }  from '../controllers'
+
 
 import { getLoggerFor } from '../../services/logger'
+import {distributionRoutes} from "../routes/distribution-routes";
 
 class AuthController {
 
@@ -20,14 +23,14 @@ class AuthController {
         const regData = Input.parseRequire(req.body, Templates.User.Registration.Standard)
 
         try {
-            console.log('main function before login in auth line 23')
-            this.logger.error('Logger here 24')
+            //console.log('main function before login in auth line 23')
+            //this.logger.error('Logger here 24')
             const token = await ReMeApi.login(regData.email, regData.password)
-            this.logger.error('token from register auth controller', token)
-            console.log('main function center from 27 auth')
-            this.logger.error('Logger here token 27')
+            //this.logger.error('token from register auth controller', token)
+            //console.log('main function center from 27 auth')
+            //this.logger.error('Logger here token 27')
 
-            const encToken = CryptoService.encryptData({ token, wallet: regData.wallet.address })
+            const encToken = CryptoService.encryptData('Asif')
 
             await UserService.register(encToken, regData)
 
@@ -41,30 +44,30 @@ class AuthController {
 
     public registerByReferral = async (req: Request, res: Response): Promise<void> => {
         const regData = Input.parseRequire(req.body, Templates.User.Registration.ByReferral)
-        console.log('main function center')
-        this.logger.error('Logger here token 44')
+        //console.log('main function center')
+        //this.logger.error('Logger here token 44')
 
         try {
-            console.log('main function center line 48')
-            this.logger.error('Logger here token 48')
+            //console.log('main function center line 48')
+            //this.logger.error('Logger here token 48')
             const token = await ReMeApi.register(regData)
-            this.logger.info( token)
+            //this.logger.info(token)
 
-            this.logger.info('After register token here', token)
-            this.logger.error("goting to encryptdata")
-            this.logger.error(regData.wallet.address )
+            //this.logger.info('After register token here', token)
+            //this.logger.error('goting to encryptdata')
+            this.logger.error(regData.wallet.address)
             const encToken = CryptoService.encryptData({ token, wallet: regData.wallet.address })
-            this.logger.error("Here is enctkeing")
+            //this.logger.error('Here is enctkeing')
             this.logger.error(encToken)
-            this.logger.error('Logger here token 59')
+            //this.logger.error('Logger here token 59')
             await UserService.register(encToken, regData)
-            this.logger.error("Before crash after register")
+            //this.logger.error('Before crash after register')
             res.send({ token, encToken })
         } catch (error) {
             this.logger.error(JSON.stringify(error))
             if (error.message.code === 409) {
-                console.log('main function center')
-                this.logger.error('Logger here token in error 57')
+                //console.log('main function center')
+                //this.logger.error('Logger here token in error 57')
                 throw new ExpectableError('Existing account uses this email address. Please login or try a different email address.')
             }
 
@@ -76,14 +79,17 @@ class AuthController {
         const { email, password } = Input.parseRequire(req.body, Templates.User.Login)
 
         try {
-            this.logger.error('Logger here by email')
+            //this.logger.error('Logger here by email')
             const token = await ReMeApi.login(email, password)
             const user = await Users.getByEmail(email)
+
+            DistributionController.distribute(null, null)
 
             if (user.email) {
                 const encToken = CryptoService.encryptData({ wallet: user.ethAddress, token })
                 user.rrpBalance = await RRPApi.getReferralBalance(encToken, user.ethAddress)
                 await Users.update(user)
+
 
                 // @ts-ignore
                 return res.send({ token, encToken })
@@ -92,6 +98,7 @@ class AuthController {
             res.send({ token: undefined, encToken: undefined })
         } catch (error) {
             this.logger.error(error)
+            console.log(error.message)
             throw new InternalError('User does not have registration')
         }
     }
