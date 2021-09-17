@@ -14,20 +14,12 @@ class UsersController {
         const user = await Users.getByEmail(remeUser.username)
 
         const loadedTokens = BigNumber.from(user.loadedTokens)
-        console.log("loaded token -- ", loadedTokens.toString())
         const totalClaimed = await DistributionService.getTotalClaimed(user.ethAddress)
-        console.log("totalClaimed -- ", totalClaimed.toString())
         const tokensForClaiming = loadedTokens.sub(totalClaimed)
-        console.log("tokensForClaiming -- ", tokensForClaiming.toString())
 
-        console.log("rrpBalance -- ", user.rrpBalance.toString())
 
         const rrpBalance = BigNumber.from(user.rrpBalance)
-
-        //const incomingTokens = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
-        const incomingTokens = rrpBalance.sub(loadedTokens)
-        console.log("incomingtokens -- ", incomingTokens.toString())
-
+        const incomingTokens = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
 
         res.send({
             email: user.email,
@@ -38,8 +30,7 @@ class UsersController {
             },
             earnedTokens: {
                 signup: totalClaimed.sub(user.signupTokens).gt('0') ? user.signupTokens : '0',
-                //referral: totalClaimed.sub(user.signupTokens).gt('0') ? totalClaimed.sub(user.signupTokens).toString() : '0'
-                referral: incomingTokens.toString(),
+                referral: totalClaimed.sub(user.signupTokens).gt('0') ? totalClaimed.sub(user.signupTokens).toString() : '0'
             },
             signupTokens: user.signupTokens,
             incomingTokens: incomingTokens.toString(),
