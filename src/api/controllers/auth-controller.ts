@@ -10,7 +10,6 @@ import { DistributionController }  from '../controllers'
 
 
 import { getLoggerFor } from '../../services/logger'
-import {distributionRoutes} from "../routes/distribution-routes";
 
 class AuthController {
 
