@@ -36,9 +36,7 @@ export class ReMeApi {
 
         return new Promise((resolve, reject) => {
             verify(token, result.public_key, (err: any, decoded: any) => {
-                console.log('verify line 41 -- ', token)
                 if (err) return reject(err)
-
                 resolve(decoded)
             })
         })

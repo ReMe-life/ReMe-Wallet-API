@@ -29,7 +29,7 @@ class AuthController {
             //console.log('main function center from 27 auth')
             //this.logger.error('Logger here token 27')
 
-            const encToken = CryptoService.encryptData('Asif')
+            const encToken = CryptoService.encryptData({ token, wallet: regData.wallet.address })
 
             await UserService.register(encToken, regData)
 
