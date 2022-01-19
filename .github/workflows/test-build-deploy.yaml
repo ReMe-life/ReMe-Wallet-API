@@ -9,14 +9,14 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [10.x]
 
     steps:
       - uses: actions/checkout@v1
-      
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -30,7 +30,7 @@ jobs:
       - name: Upload environment variables
         run: |
           echo PORT=80 >> .env
-          echo RRP_ENDPOINT=https://ws-remelife.s6.staging-host.com >> .env
+          echo RRP_ENDPOINT=https://ws-rrp.remelife.com/ >> .env
           echo REME_CORE_ENDPOINT=https://reme.onlinedemo.space:8000 >> .env
           echo DISTRIBUTION_ENDPOINT=$DISTRIBUTION_ENDPOINT >> .env
           echo TOKEN_ENC_SECRET=$TOKEN_ENC_SECRET >> .env
@@ -41,7 +41,7 @@ jobs:
           echo ADMIN_PRIVATE_KEY=$ADMIN_PRIVATE_KEY >> .env
           echo BLOCKCHAIN_NETWORK=$BLOCKCHAIN_NETWORK >> .env
           echo DISTRIBUTION_CONTRACT=$DISTRIBUTION_CONTRACT >> .env
-        env: 
+        env:
           SIGN_UP_REWARD: ${{ secrets.SIGN_UP_REWARD }}
           TOKEN_ENC_SECRET: ${{ secrets.TOKEN_ENC_SECRET }}
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
