@@ -26,6 +26,7 @@ class AuthController {
             const token = await ReMeApi.login(regData.email, regData.password)
             this.logger.error('token from register auth controller', token)
             // console.log('main function center from 27 auth')
+
             // this.logger.error('Logger here token 27')
 
             const encToken = CryptoService.encryptData({ token, wallet: regData.wallet.address })
