@@ -16,6 +16,7 @@ export class FirebaseDatabase implements BaseDatabase {
 
     public async initialize () {
         if (firebase.apps.length === 0) {
+            console.log('connecting with database firestore...')
             const dbConnection = JSON.parse(atob(process.env.DB_CONNECTION))
             firebase.initializeApp({
                 projectId: dbConnection.serviceAccount.projectId,
