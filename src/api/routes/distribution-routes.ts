@@ -5,7 +5,7 @@ export const distributionRoutes = (expressApp: any) => {
     const router = expressApp.Router()
 
     router.post('/', BasicAuth.AdminAuth.auth, DistributionController.distribute)
-    // router.post('/', DistributionController.distribute)
+    //router.post('/', DistributionController.distribute)
     router.get('/', TokenAuth.auth, DistributionController.getClaimData)
 
     return router

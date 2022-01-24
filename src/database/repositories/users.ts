@@ -14,20 +14,16 @@ class Users extends BaseRepository {
     }
 
     public async create (document: any): Promise<any> {
-        console.log('inside:crate->user.', document.email)
         const user = await this.getByEmail(document.email)
-        console.log('getemail:crate->user.')
         if (user) {
             throw new Error('User with such email already exists')
         }
 
         document.id = document.email
-        console.log('return:crate->user.', document.id)
         return super.create(document)
     }
 
     public async getByEmail (email: any): Promise<any> {
-        console.log('inside email: return ', email)
         return super.getById(email)
     }
 

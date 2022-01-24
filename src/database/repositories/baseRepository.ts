@@ -48,12 +48,9 @@ class BaseRepository {
 
     public async getById (id: any): Promise<any> {
         await this.isReady
-        console.log('data from firebase in getbyID')
 
         try {
-            console.log('data from firebase in getbyID', this.db)
             const data = await this.db.getById(id)
-            console.log('data from firebase in getbyID', data)
             return data
         } catch (error) {
             throw new Error(`Error when getting document for ${this.collection}: ${error.message}`)
