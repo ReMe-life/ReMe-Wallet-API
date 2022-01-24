@@ -7,7 +7,7 @@ const ONE_TOKEN = '1000000000000000000'
 export class RRPApi {
 
     public static async createUser (user: any): Promise<any> {
-
+        console.log('create user from rrp-api/index.ts =>', process.env.RRP_ENDPOINT)
         try {
             const result = await HTTPRequester.post(
                 `${process.env.RRP_ENDPOINT}/addWithReferral`,
@@ -15,7 +15,6 @@ export class RRPApi {
             )
 
             return result
-
         } catch (error) {
             throw new InternalError(
                 `Creation of a user in RRP has failed: ${JSON.stringify(error)}`
@@ -30,11 +29,11 @@ export class RRPApi {
                 `${process.env.RRP_ENDPOINT}/getMyBalance/${userAddress}`,
                 { Authorization: `${encToken}` }
             )
+            console.log('Result from getMyBalance =>', BigNumber.from(result.data.balance).mul(ONE_TOKEN).toString())
 
             return BigNumber.from(result.data.balance).mul(ONE_TOKEN).toString()
             // return BigNumber.from(1).mul(ONE_TOKEN).toString()
         } catch (error) {
-
             throw new InternalError(
                 `Retrieving of referral amount for user[${userAddress}] has failed: ${JSON.stringify(error)}`
             )
@@ -46,10 +45,10 @@ export class RRPApi {
             const result = await HTTPRequester.get(
                 `${process.env.RRP_ENDPOINT}/getReferralCode/${userAddress}`
             )
+            console.log('this is resutl from refrallink =>', result.data.referral_code)
 
             return result.data.referral_code
         } catch (error) {
-
             throw new InternalError(
                 `Retrieving of referral link for user[${userAddress}] has failed: ${JSON.stringify(error)}`
             )
