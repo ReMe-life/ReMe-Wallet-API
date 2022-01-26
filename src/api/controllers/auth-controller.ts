@@ -58,7 +58,7 @@ class AuthController {
             // this.logger.error('goting to encryptdata')
             const encToken = CryptoService.encryptData({ token, wallet: regData.wallet.address })
             console.log('encToken ==>')
-            console.log(encToken);
+            console.log(encToken)
             // this.logger.error('Here is enctkeing')
             // this.logger.error(encToken)
             // this.logger.error('Logger here token 59')
