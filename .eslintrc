@@ -5,7 +5,8 @@
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
-    "sourceType": "module"
+    "sourceType": "module",
+    "warnOnUnsupportedTypeScriptVersion": false
   },
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
@@ -504,5 +505,6 @@
       "error",
       "never"
     ]
-  }
+  },
+
 }
