@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 import { Request, Response } from 'express'
 
 import { Users, Distributions } from '../../database/repositories'
-import { DistributionService } from '../../services'
+// import { DistributionService } from '../../services'
 import { ReMeApi, DistributionApi } from '../../external-apis'
 
 class DistributionController {
