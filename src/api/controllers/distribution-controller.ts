@@ -24,8 +24,9 @@ class DistributionController {
 
                 const loadedTokens = BigNumber.from(user.loadedTokens)
                 //const tokensForClaiming = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
-                const tokensForClaiming = (rrpBalance + user.signupTokens) - user.loadedTokens
+                //const tokensForClaiming = rrpBalance.add(BigNumber.from(user.signupTokens)).sub(loadedTokens)
                 //const tokensForClaiming = rrpBalance.sub(loadedTokens)
+                const tokensForClaiming = loadedTokens
 
                 console.log('token claiming', tokensForClaiming.toString())
 
