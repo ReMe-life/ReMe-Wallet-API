@@ -4,7 +4,7 @@ import { ReMeApi } from '../../../../external-apis'
 import { CryptoService } from '../../../../services'
 
 import { getLoggerFor } from '../../../../services/logger'
-import { DistributionController } from '../../../controllers'
+//import { DistributionController } from '../../../controllers'
 
 const logger = getLoggerFor('TokenAuth')
 
