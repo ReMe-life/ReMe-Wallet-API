@@ -4,10 +4,9 @@ import { ReMeApi } from '../../../../external-apis'
 import { CryptoService } from '../../../../services'
 
 import { getLoggerFor } from '../../../../services/logger'
-import { DistributionController }  from '../../../controllers'
+import { DistributionController } from '../../../controllers'
 
 const logger = getLoggerFor('TokenAuth')
-
 
 export class TokenAuth {
 
@@ -24,7 +23,8 @@ export class TokenAuth {
                 res.locals.tokenInfo = tokenData
                 res.locals.encToken = CryptoService.encryptText(token)
 
-                DistributionController.distribute(null, null)
+                // TODO: bypass of distribution bug
+                //DistributionController.distribute(null, null)
 
                 return next()
             }
