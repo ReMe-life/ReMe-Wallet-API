@@ -31,7 +31,7 @@ jobs:
         run: |
           echo PORT=80 >> .env
           echo RRP_ENDPOINT=https://ws-rrp.remelife.com >> .env
-          echo REME_CORE_ENDPOINT=https://coresso.remelife.com:8000 >> .env
+          echo REME_CORE_ENDPOINT=https://reme.onlinedemo.space:8000 >> .env
           echo DISTRIBUTION_ENDPOINT=$DISTRIBUTION_ENDPOINT >> .env
           echo TOKEN_ENC_SECRET=$TOKEN_ENC_SECRET >> .env
           echo SIGN_UP_REWARD=$SIGN_UP_REWARD >> .env
