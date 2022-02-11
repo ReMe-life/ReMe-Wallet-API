@@ -51,7 +51,7 @@ jobs:
       - uses: actions-hub/gcloud@master
         name: Deploy service
         env:
-          PROJECT_ID: reme-wallet-test-master
+          PROJECT_ID: reme-wallet-staging
           APPLICATION_CREDENTIALS: ${{ secrets.GKE_TEST_KEY }}
         with:
           args: app deploy ./app-test.yaml
