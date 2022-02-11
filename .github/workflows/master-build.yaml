@@ -1,4 +1,4 @@
-name: Test Build and Deploy to GCE
+name: Test Build and Deploy to GCE with master
 
 on:
   push:
