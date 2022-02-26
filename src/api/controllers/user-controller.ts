@@ -11,6 +11,7 @@ class UsersController {
 
     public getDetails = async (req: Request, res: Response): Promise<void> => {
         const remeUser = await ReMeApi.getUser(res.locals.token, res.locals.tokenInfo.id)
+        console.log('getdtailas remeUser=====>', remeUser)
         const user = await Users.getByEmail(remeUser.username)
         const loadedTokens = BigNumber.from(user.loadedTokens)
         const totalClaimed = await DistributionService.getTotalClaimed(user.ethAddress)
@@ -33,7 +34,8 @@ class UsersController {
             signupTokens: user.signupTokens,
             incomingTokens: incomingTokens.toString(),
             tokensForClaiming: tokensForClaiming.toString(),
-            rrpBalance: rrpBalance.toString()
+            rrpBalance: rrpBalance.toString(),
+            full_name: remeUser.firstname + ' ' + remeUser.lastname
         })
     }
 
