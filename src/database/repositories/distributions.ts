@@ -14,7 +14,7 @@ class Distributions extends BaseRepository {
     }
 
     public async create (document: any): Promise<any> {
-        document.id = Date.now()
+        document.id = `${Date.now()}`
         return super.create(document)
     }
 

@@ -1,14 +1,17 @@
+import { BigNumber } from 'ethers'
 import { HTTPRequester } from '../http-requester'
 import { InternalError } from '../../exception'
 
+const ONE_TOKEN = '1000000000000000000'
+
 export class RRPApi {
 
-    public static async createUser (token: string, user: any): Promise<any> {
+    public static async createUser (user: any): Promise<any> {
+        console.log('create user from rrp-api/index.ts =>', process.env.RRP_ENDPOINT)
         try {
             const result = await HTTPRequester.post(
                 `${process.env.RRP_ENDPOINT}/addWithReferral`,
-                { uid: user.address, referred_by: user.referredBy },
-                { Authorization: `Bearer ${token}` }
+                { uid: user.address, referred_by: user.referredBy }
             )
 
             return result
@@ -19,14 +22,17 @@ export class RRPApi {
         }
     }
 
-    public static async getReferralBalance (token: string, userAddress: string): Promise<any> {
+    public static async getReferralBalance (encToken: string, userAddress: string): Promise<any> {
         try {
+            console.log(`${process.env.RRP_ENDPOINT}` + '/getMyBalance/' + `${userAddress}`)
             const result = await HTTPRequester.get(
                 `${process.env.RRP_ENDPOINT}/getMyBalance/${userAddress}`,
-                { Authorization: `Bearer ${token}` }
+                { Authorization: `${encToken}` }
             )
+            console.log('Result from getMyBalance =>', BigNumber.from(result.data.balance).mul(ONE_TOKEN).toString())
 
-            return result.data.balance
+            return BigNumber.from(result.data.balance).mul(ONE_TOKEN).toString()
+            // return BigNumber.from(1).mul(ONE_TOKEN).toString()
         } catch (error) {
             throw new InternalError(
                 `Retrieving of referral amount for user[${userAddress}] has failed: ${JSON.stringify(error)}`
@@ -34,12 +40,12 @@ export class RRPApi {
         }
     }
 
-    public static async getReferralLink (token: string, userAddress: string): Promise<any> {
+    public static async getReferralLink (userAddress: string): Promise<any> {
         try {
             const result = await HTTPRequester.get(
-                `${process.env.RRP_ENDPOINT}/getReferralCode/${userAddress}`,
-                { Authorization: `Bearer ${token}` }
+                `${process.env.RRP_ENDPOINT}/getReferralCode/${userAddress}`
             )
+            console.log('this is resutl from refrallink =>', result.data.referral_code)
 
             return result.data.referral_code
         } catch (error) {

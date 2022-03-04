@@ -9,14 +9,14 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [10.x]
 
     steps:
       - uses: actions/checkout@v1
-      
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -30,8 +30,10 @@ jobs:
       - name: Upload environment variables
         run: |
           echo PORT=80 >> .env
-          echo RRP_ENDPOINT=https://ws-rrp.remelife.com/ >> .env
-          echo REME_CORE_ENDPOINT=https://devcore.remelife.com:8492 >> .env
+          echo RRP_ENDPOINT=https://ws-rrp.remelife.com >> .env
+          echo REME_CORE_ENDPOINT=https://reme.onlinedemo.space:8000 >> .env
+          echo DISTRIBUTION_ENDPOINT=$DISTRIBUTION_ENDPOINT >> .env
+          echo TOKEN_ENC_SECRET=$TOKEN_ENC_SECRET >> .env
           echo SIGN_UP_REWARD=$SIGN_UP_REWARD >> .env
           echo DB_CONNECTION=$DB_CONNECTION >> .env
           echo ADMIN_EMAIL=$ADMIN_EMAIL >> .env
@@ -39,17 +41,19 @@ jobs:
           echo ADMIN_PRIVATE_KEY=$ADMIN_PRIVATE_KEY >> .env
           echo BLOCKCHAIN_NETWORK=$BLOCKCHAIN_NETWORK >> .env
           echo DISTRIBUTION_CONTRACT=$DISTRIBUTION_CONTRACT >> .env
-        env: 
+        env:
           SIGN_UP_REWARD: ${{ secrets.SIGN_UP_REWARD }}
+          TOKEN_ENC_SECRET: ${{ secrets.TOKEN_ENC_SECRET }}
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           ADMIN_PRIVATE_KEY: ${{ secrets.ADMIN_PRIVATE_KEY }}
           BLOCKCHAIN_NETWORK: ${{ secrets.BLOCKCHAIN_NETWORK }}
           DISTRIBUTION_CONTRACT: ${{ secrets.DISTRIBUTION_CONTRACT }}
+          DISTRIBUTION_ENDPOINT: ${{ secrets.DISTRIBUTION_ENDPOINT }}
 
-      - uses: actions-hub/gcloud@master
-        name: Deploy service
+      - name: Deploy service
+        uses: actions-hub/gcloud@master
         env:
           PROJECT_ID: reme-wallet-test
           APPLICATION_CREDENTIALS: ${{ secrets.GKE_TEST_KEY }}

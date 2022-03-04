@@ -37,14 +37,18 @@ export class FirebaseDatabase implements BaseDatabase {
     }
 
     public async update (document: any) {
-        await this.db.doc(document.id).update()
+        await this.db.doc(document.id).update(document)
     }
 
     public async all () {
+        const all = []
         const result = await this.db.get()
-        result.docs.map((doc: any) => doc.data())
 
-        return result.docs
+        for (let i = 0; i < result.docs.length; i++) {
+            all.push(result.docs[i].data())
+        }
+
+        return all
     }
 
     public async getById (id: any) {

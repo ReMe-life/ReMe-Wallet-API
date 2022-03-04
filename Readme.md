@@ -9,6 +9,7 @@
 * Set the configuration variables
 
 
+
 ```
 # Staging .env
 
@@ -66,6 +67,26 @@ DISTRIBUTION_CONTRACT=''
     npm run build
     npm run watch
     ```
+    
+# Production Deployment
+1. Clone the project locally
+2. Checkout to the staging branch
+2. Open the .github/workflow/test-build-deployment.yaml file and on rows 33, 34 replace both urls with Antier API and ReMeCore API
+3. Go to Firebase https://console.firebase.google.com/u/0/project/reme-wallet-test/overview
+    1. Open Firestore Database
+    2. Drop distributions table
+    3. Drop users table
+4. Go to the setting of the repo https://github.com/ReMe-life/ReMe-Wallet-API/settings/secrets/actions
+    1. Update the admin email
+    2. Update the admin password
+    3. Update the admin private key
+    4. Update the blockchain network
+    5. Update the distribution contract
+    6. Update the signup reward 
+    7. Update the encryption secret for the Antier JWT tokens
+5. Push the code changes made in test-build-deployment.yaml
+6. Check out the deployment - https://github.com/ReMe-life/ReMe-Wallet-API/actions
+
 
 # Distribution instructions
 

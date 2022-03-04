@@ -4,6 +4,7 @@ import { HTTPRequester } from '../http-requester'
 export class ReMeApi {
 
     public static async register (user: any): Promise<any> {
+        console.log('ReMeApi register req intiate from reme-api/index.ts ==>', process.env.REME_CORE_ENDPOINT)
         await HTTPRequester.post(
             `${process.env.REME_CORE_ENDPOINT}/auth/register`,
             {
@@ -14,7 +15,9 @@ export class ReMeApi {
             }
         )
 
+        console.log('ReMeApi register req intiate from reme-api/index.ts ==> attempt to login')
         const token = await ReMeApi.login(user.email, user.password)
+
         return token
     }
 
@@ -24,6 +27,7 @@ export class ReMeApi {
             { username: email, password }
         )
 
+        console.log('ReMeApi register req intiate from reme-api/index.ts ==> return jwt', result.jwt)
         return result.jwt
     }
 
@@ -35,7 +39,6 @@ export class ReMeApi {
         return new Promise((resolve, reject) => {
             verify(token, result.public_key, (err: any, decoded: any) => {
                 if (err) return reject(err)
-
                 resolve(decoded)
             })
         })
@@ -49,4 +52,19 @@ export class ReMeApi {
 
         return result
     }
+
+    public static async resetPassword (email: string): Promise<void> {
+        await HTTPRequester.post(
+            `${process.env.REME_CORE_ENDPOINT}/auth/forgot`,
+            { username: email }
+        )
+    }
+
+    public static async confirmReset (resetData: any): Promise<void> {
+        await HTTPRequester.post(
+            `${process.env.REME_CORE_ENDPOINT}/auth/confirm`,
+            { ...resetData }
+        )
+    }
+
 }

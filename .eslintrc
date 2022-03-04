@@ -10,13 +10,10 @@
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/camelcase": [
-      "error",
-      {
-        "properties": "never"
-      }
-    ],
+    "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "accessor-pairs": "error",
     "array-bracket-spacing": [
       "error",
@@ -504,5 +501,6 @@
       "error",
       "never"
     ]
-  }
+  },
+
 }
