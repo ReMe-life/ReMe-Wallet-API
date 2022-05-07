@@ -15,7 +15,7 @@ class DistributionController {
         const distribution = { users: [] }
         const allUsers = await Users.all()
 
-        //console.log(allUsers)
+        // console.log(allUsers)
 
         for (let i = 0; i < allUsers.length; i++) {
             const user = allUsers[i]
@@ -23,37 +23,37 @@ class DistributionController {
                 const rrpBalance = BigNumber.from(user.rrpBalance)
 
                 const loadedTokens = BigNumber.from(user.loadedTokens)
-                console.log('loaded token at new registration: ',loadedTokens)
+                console.log('loaded token at new registration: ', loadedTokens)
                 const tokensForClaiming = rrpBalance.add(BigNumber.from(0)).sub(loadedTokens)
                 // const tokensForClaiming = rrpBalance.sub(BigNumber.from(user.signupTokens))
-                //const tokensForClaiming = rrpBalance.sub(loadedTokens)
+                // const tokensForClaiming = rrpBalance.sub(loadedTokens)
 
                 console.log('token claiming', tokensForClaiming.toString())
 
                 if (!tokensForClaiming.eq('0')) {
                     //
-                    console.log("inside token Claiming")
+                    console.log('inside token Claiming')
                     console.log('token claiming in if', tokensForClaiming)
                     const totalDistributedTokens = loadedTokens.add(tokensForClaiming).toString()
 
                     // TODO: distribution tree link with reme.core which is not required now and server is not working
-                    //user.distributionIndex = await DistributionApi.addMoreTokens(user.ethAddress, totalDistributedTokens)
+                    // user.distributionIndex = await DistributionApi.addMoreTokens(user.ethAddress, totalDistributedTokens)
                     user.distributionIndex = tokensForClaiming.toString()
                     user.loadedTokens = totalDistributedTokens
                     console.log('in console log tokenclaim', user)
                     await Users.update(user)
-                    console.log("distribution: before", distribution)
+                    console.log('distribution: before', distribution)
                     distribution.users.push({ email: user.email, claimAmount: tokensForClaiming.toString() })
-                    console.log("distribution: after", distribution)
-                }else {
+                    console.log('distribution: after', distribution)
+                } else {
                     console.log('not in console.log')
                 }
             }
         }
 
         // TODO: distribution tree link with reme.core which is not required now and server is not working
-        //const distributionHash = await DistributionApi.getRootHash()
-        ////await DistributionService.updateRootHash(distributionHash)
+        // const distributionHash = await DistributionApi.getRootHash()
+        /// /await DistributionService.updateRootHash(distributionHash)
         console.log(distribution)
         await Distributions.create(distribution)
 

@@ -109,6 +109,9 @@ class AuthController {
 
     public reset = async (req: Request, res: Response): Promise<void> => {
         const { email } = Input.parseRequire(req.body, Templates.User.Password.Reset)
+        console.log('=======')
+        console.log('Reset Password hit by API')
+        console.log('=======')
 
         try {
             await ReMeApi.resetPassword(email)

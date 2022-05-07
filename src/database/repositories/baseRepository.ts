@@ -1,4 +1,4 @@
-import { FirebaseDatabase } from '../db-connectors/firebaseDatabase'
+import { FirebaseDatabase } from '../db-connectors/FirebaseDatabase'
 
 class BaseRepository {
 
